@@ -24,7 +24,6 @@ public class ProductDetailsPageServlet extends HttpServlet {
 
     public static final String QUANTITY = "quantity";
     public static final String ERROR_MESSAGE = "errorMessage";
-    public static final String RECENTLY_VIEW_SECTION = "recentlyViewSection";
     public static final String PRODUCT_DETAILS_PAGE_JSP = "/WEB-INF/pages/productDetails.jsp";
 
     private ProductDao productDao;
@@ -51,7 +50,6 @@ public class ProductDetailsPageServlet extends HttpServlet {
         Product product = productDao.getProduct(productId);
         RecentlyViewSection recentlyViewSection = recentlyViewService.getRecentlyViewSection(request);
         recentlyViewService.add(recentlyViewSection, request, product);
-        request.setAttribute(RECENTLY_VIEW_SECTION, recentlyViewSection);
         request.setAttribute("cart", cartService.getCart(request));
         request.setAttribute("product", product);
         request.getRequestDispatcher(PRODUCT_DETAILS_PAGE_JSP).forward(request, response);

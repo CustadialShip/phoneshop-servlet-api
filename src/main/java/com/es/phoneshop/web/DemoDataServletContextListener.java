@@ -25,6 +25,11 @@ public class DemoDataServletContextListener implements ServletContextListener {
         }
     }
 
+    @Override
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+
+    }
+
     private void saveSampleProducts() {
         Currency usd = Currency.getInstance("USD");
         PriceHistory time1 = new PriceHistory(LocalDate.of(2015, 3, 2), new BigDecimal(50));

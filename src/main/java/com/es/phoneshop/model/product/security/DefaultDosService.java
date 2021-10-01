@@ -6,7 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class DefaultDosService implements DosService {
 
     public static final int THRESHOLD = 20;
-    public static final long UPDATE_LATENCY = 6;
+    public static final long UPDATE_LATENCY = 60000;
     private long lastMinuteTiming = System.currentTimeMillis();
     Map<String, Long> countIpRequests = new ConcurrentHashMap<>();
 

@@ -1,8 +1,5 @@
 package com.es.phoneshop.web;
 
-import com.es.phoneshop.model.product.productdao.ArrayListProductDao;
-import com.es.phoneshop.model.product.productdao.Product;
-import com.es.phoneshop.model.product.productdao.ProductDao;
 import com.es.phoneshop.model.product.cart.Cart;
 import com.es.phoneshop.model.product.cart.CartService;
 import com.es.phoneshop.model.product.cart.DefaultCartService;
@@ -10,9 +7,9 @@ import com.es.phoneshop.model.product.enums.sort.SortField;
 import com.es.phoneshop.model.product.enums.sort.SortOrder;
 import com.es.phoneshop.model.product.exceptions.QuantityLowerZeroException;
 import com.es.phoneshop.model.product.exceptions.StockException;
-import com.es.phoneshop.model.product.recentlyview.DefaultRecentlyViewService;
-import com.es.phoneshop.model.product.recentlyview.RecentlyViewSection;
-import com.es.phoneshop.model.product.recentlyview.RecentlyViewService;
+import com.es.phoneshop.model.product.productdao.ArrayListProductDao;
+import com.es.phoneshop.model.product.productdao.Product;
+import com.es.phoneshop.model.product.productdao.ProductDao;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -20,7 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -32,12 +28,10 @@ public class ProductListPageServlet extends HttpServlet {
     private static final String SEARCH_TEXT = "searchText";
     private static final String SORT_ORDER = "sortOrder";
     private static final String SORT_FIELD = "sortField";
-    public static final String RECENTLY_VIEW_SECTION = "recentlyViewSection";
     public static final String PRODUCT_LIST_PAGE_JSP = "/WEB-INF/pages/productList.jsp";
     public static final String PRODUCTS_QUANTITIES_MAP = "productsQuantitiesMap";
 
     private ProductDao productDao;
-    private RecentlyViewService recentlyViewService;
     private CartService cartService;
     private WebHelperService webHelperService;
 
@@ -46,7 +40,6 @@ public class ProductListPageServlet extends HttpServlet {
         super.init(config);
         cartService = DefaultCartService.getInstance();
         productDao = ArrayListProductDao.getInstance();
-        recentlyViewService = DefaultRecentlyViewService.getInstance();
         webHelperService = WebHelperService.getInstance();
     }
 
@@ -64,8 +57,6 @@ public class ProductListPageServlet extends HttpServlet {
         List<String> searchTextList = searchText != null ? parseSearchText(request) : null;
         String sortOrder = request.getParameter(SORT_ORDER);
         String sortField = request.getParameter(SORT_FIELD);
-        RecentlyViewSection recentlyViewSection = recentlyViewService.getRecentlyViewSection(request);
-        request.setAttribute(RECENTLY_VIEW_SECTION, recentlyViewSection);
         request.setAttribute("products", productDao.findProducts(searchTextList,
                 sortField != null ? SortField.valueOf(sortField) : null,
                 sortOrder != null ? SortOrder.valueOf(sortOrder) : null));

@@ -75,6 +75,16 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>recentlyViewProducts</servlet-name>
+        <servlet-class>com.es.phoneshop.web.RecentlyViewProductsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>recentlyViewProducts</servlet-name>
+        <url-pattern>/recentlyViewProducts</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>checkout</servlet-name>
         <servlet-class>com.es.phoneshop.web.CheckoutPageServlet</servlet-class>
     </servlet>

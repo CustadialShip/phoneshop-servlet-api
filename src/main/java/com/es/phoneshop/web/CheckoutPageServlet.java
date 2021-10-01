@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
 public class CheckoutPageServlet extends HttpServlet {
 
     public static final String CHECKOUT_PAGE_JSP = "/WEB-INF/pages/checkoutPage.jsp";
+    public static final String PHONE_PATTERN = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s./0-9]*$";
     private CartService cartService;
     private DefaultOrderService orderService;
 
@@ -81,7 +82,7 @@ public class CheckoutPageServlet extends HttpServlet {
 
     private void setPhoneNumber(HttpServletRequest request, Map<String, String> errors, Order order) {
         Pattern phonePattern =
-                Pattern.compile("^(\\+\\d{1,3}( )?)?((\\(\\d{1,3}\\))|\\d{1,3})[- .]?\\d{3,4}[- .]?\\d{4}$");
+                Pattern.compile(PHONE_PATTERN);
         String value = request.getParameter("phone");
         if (value == null || value.isEmpty()) {
             errors.put("phone", "Field is required");
