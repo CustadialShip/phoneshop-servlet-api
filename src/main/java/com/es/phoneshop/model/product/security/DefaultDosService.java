@@ -35,7 +35,7 @@ public class DefaultDosService implements DosService {
             countRequests = 1L;
             lastMinuteTiming = System.currentTimeMillis();
         } else {
-            if (countRequests > THRESHOLD) {
+            if (countRequests >= THRESHOLD) {
                 return false;
             }
             countRequests++;
