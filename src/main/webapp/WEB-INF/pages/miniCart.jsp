@@ -5,3 +5,4 @@
 <a style="font-size: x-large" href="${pageContext.servletContext.contextPath}/cart">
     Cart: total quantity - ${cart.totalQuantity} | total price - ${cart.totalPrice}
 </a>
+<a href="${pageContext.servletContext.contextPath}/advancedSearch" style="font-size: xx-large">Advanced search</a>
