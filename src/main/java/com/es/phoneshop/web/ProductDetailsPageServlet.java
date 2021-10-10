@@ -7,7 +7,7 @@ import com.es.phoneshop.model.product.cart.CartService;
 import com.es.phoneshop.model.product.cart.DefaultCartService;
 import com.es.phoneshop.model.product.productdao.ProductDao;
 import com.es.phoneshop.model.product.exceptions.ItemNotFindException;
-import com.es.phoneshop.model.product.exceptions.QuantityLowerZeroException;
+import com.es.phoneshop.model.product.exceptions.LowerZeroException;
 import com.es.phoneshop.model.product.exceptions.StockException;
 import com.es.phoneshop.model.product.recentlyview.DefaultRecentlyViewService;
 import com.es.phoneshop.model.product.recentlyview.RecentlyViewSection;
@@ -64,7 +64,7 @@ public class ProductDetailsPageServlet extends HttpServlet {
         } catch (NumberFormatException | ParseException exception) {
             setErrorMessage(request, response, "Quantity should be integer");
             return;
-        } catch (QuantityLowerZeroException exception) {
+        } catch (LowerZeroException exception) {
             setErrorMessage(request, response, "Quantity should be > 0");
             return;
         }
