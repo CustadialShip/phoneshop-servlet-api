@@ -4,17 +4,14 @@ import com.es.phoneshop.model.product.productdao.ArrayListProductDao;
 import com.es.phoneshop.model.product.productdao.ProductDao;
 import com.es.phoneshop.model.product.cart.CartService;
 import com.es.phoneshop.model.product.cart.DefaultCartService;
-import com.es.phoneshop.model.product.exceptions.QuantityLowerZeroException;
+import com.es.phoneshop.model.product.exceptions.LowerZeroException;
 import com.es.phoneshop.model.product.exceptions.StockException;
-import com.es.phoneshop.model.product.recentlyview.DefaultRecentlyViewService;
-import com.es.phoneshop.model.product.recentlyview.RecentlyViewService;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,7 +53,7 @@ public class CartPageServlet extends HttpServlet {
                 setErrorMessageToMap(productId, errorsMap,
                         "Not enough stock, available " +
                                 productDao.getProduct(productId).getStock());
-            } catch (QuantityLowerZeroException exception) {
+            } catch (LowerZeroException exception) {
                 setErrorMessageToMap(productId, errorsMap, "Quantity should be > 0");
             }
         }

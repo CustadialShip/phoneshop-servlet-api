@@ -5,6 +5,8 @@
 
 <jsp:useBean id="advancedSearchParamList" type="java.util.List" scope="request"/>
 <jsp:useBean id="productList" type="java.util.List" scope="request"/>
+<jsp:useBean id="errors" type="java.util.Map" scope="request"/>
+<jsp:useBean id="advancedSearchParam" type="com.es.phoneshop.model.product.enums.AdvancedSearchParam" scope="request"/>
 
 <tags:master pageTitle="Advanced search">
     <script>
@@ -25,16 +27,16 @@
         <table class="light-green" style="width: 25%">
             <tr>
                 <td>Description:</td>
-                <td><input type="text" name="advancedDescription">
-                    <select name="advanceParam">
-                        <c:forEach var="advancedSearchParam" items="${advancedSearchParamList}">
+                <td><input type="text" name="advancedDescription" value="${param.advancedDescription}">
+                    <select name="advancedParam">
+                        <c:forEach var="advancedSearch" items="${advancedSearchParamList}">
                             <c:choose>
-                                <c:when test="${advancedSearchParam eq order.paymentMethod}">
-                                    <option value="${advancedSearchParam}"
-                                            selected="selected">${advancedSearchParam}</option>
+                                <c:when test="${advancedSearch eq advancedSearchParam}">
+                                    <option value="${advancedSearch}"
+                                            selected="selected">${advancedSearch}</option>
                                 </c:when>
                                 <c:otherwise>
-                                    <option value="${advancedSearchParam}">${advancedSearchParam}</option>
+                                    <option value="${advancedSearch}">${advancedSearch}</option>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
@@ -43,14 +45,32 @@
             </tr>
             <tr>
                 <td>Min price:</td>
-                <td><input type="text" name="minPrice">
+                <td>
+                    <label>
+                        <input type="text" name="minPrice" value="${param.minPrice}">
+                    </label>
+                    <c:if test="${not empty errors['minPrice']}">
+                        <div class="error-message">${errors['minPrice']}</div>
+                    </c:if>
                 </td>
             </tr>
             <tr>
                 <td>Max price:</td>
-                <td><input type="text" name="maxPrice"></td>
+                <td>
+                    <label>
+                        <input type="text" name="maxPrice" value="${param.maxPrice}">
+                    </label>
+                    <c:if test="${not empty errors['maxPrice']}">
+                        <div class="error-message">${errors['maxPrice']}</div>
+                    </c:if>
+                </td>
             </tr>
         </table>
+        <c:if test="${not empty errors['minMaxPrice']}">
+            <p>
+            <div class="error-message">${errors['minMaxPrice']}</div>
+            </p>
+        </c:if>
         <button>Search</button>
     </form>
     <table class="light-green">

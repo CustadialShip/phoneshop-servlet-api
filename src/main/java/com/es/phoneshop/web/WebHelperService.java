@@ -1,7 +1,7 @@
 package com.es.phoneshop.web;
 
 import com.es.phoneshop.model.product.cart.DefaultCartService;
-import com.es.phoneshop.model.product.exceptions.QuantityLowerZeroException;
+import com.es.phoneshop.model.product.exceptions.LowerZeroException;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.NumberFormat;
@@ -27,11 +27,11 @@ public class WebHelperService {
     }
 
     public int parseRightQuantity(HttpServletRequest request, String quantityString)
-            throws NumberFormatException, QuantityLowerZeroException, ParseException {
+            throws NumberFormatException, LowerZeroException, ParseException {
         NumberFormat format = NumberFormat.getInstance(request.getLocale());
         int quantity = getQuantity(quantityString, format);
         if (quantity <= 0) {
-            throw new QuantityLowerZeroException("Quantity should be > 0");
+            throw new LowerZeroException("Quantity should be > 0");
         }
         return quantity;
     }

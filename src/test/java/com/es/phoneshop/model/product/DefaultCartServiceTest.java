@@ -5,7 +5,7 @@ import com.es.phoneshop.model.product.cart.CartItem;
 import com.es.phoneshop.model.product.cart.CartService;
 import com.es.phoneshop.model.product.cart.DefaultCartService;
 import com.es.phoneshop.model.product.exceptions.DeleteException;
-import com.es.phoneshop.model.product.exceptions.QuantityLowerZeroException;
+import com.es.phoneshop.model.product.exceptions.LowerZeroException;
 import com.es.phoneshop.model.product.exceptions.StockException;
 import com.es.phoneshop.model.product.productdao.*;
 import org.junit.Before;
@@ -151,7 +151,7 @@ public class DefaultCartServiceTest {
     }
 
     @Test
-    public void testPutToCart() throws StockException, QuantityLowerZeroException {
+    public void testPutToCart() throws StockException, LowerZeroException {
         cartService.putToCart(actualCart, 0L, 3);
         Product product = new ProductBuilderImpl().setId(0L).setCode("sgs").setDescription("Samsung Galaxy S").setPrice(new BigDecimal(100)).setCurrency(usd).setStock(100).setImageUrl("https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer/Samsung/Samsung%20Galaxy%20S.jpg").setPriceHistory(priceHistoryList).build();
         int expectedQuantity = cartService.getQuantityOfCartItem(actualCart, product);
@@ -159,7 +159,7 @@ public class DefaultCartServiceTest {
     }
 
     @Test
-    public void testPutToCartWithItemInCart() throws StockException, QuantityLowerZeroException {
+    public void testPutToCartWithItemInCart() throws StockException, LowerZeroException {
         cartService.addToCart(actualCart, 0L, 3);
         cartService.putToCart(actualCart, 0L, 2);
         Product product = new ProductBuilderImpl().setId(0L).setCode("sgs").setDescription("Samsung Galaxy S").setPrice(new BigDecimal(100)).setCurrency(usd).setStock(100).setImageUrl("https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer/Samsung/Samsung%20Galaxy%20S.jpg").setPriceHistory(priceHistoryList).build();
@@ -172,13 +172,13 @@ public class DefaultCartServiceTest {
         try {
             cartService.putToCart(actualCart, 0L, -1);
             fail("Expected QuantityLowerZeroException");
-        } catch (QuantityLowerZeroException exception) {
+        } catch (LowerZeroException exception) {
             assertNotEquals("", exception.getMessage());
         }
     }
 
     @Test
-    public void testPutToCartErrorStockException() throws QuantityLowerZeroException {
+    public void testPutToCartErrorStockException() throws LowerZeroException {
         try {
             cartService.putToCart(actualCart, 0L, 10000);
             fail("Expected StockException");

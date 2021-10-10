@@ -4,7 +4,7 @@ import com.es.phoneshop.model.product.productdao.ArrayListProductDao;
 import com.es.phoneshop.model.product.productdao.Product;
 import com.es.phoneshop.model.product.productdao.ProductDao;
 import com.es.phoneshop.model.product.exceptions.DeleteException;
-import com.es.phoneshop.model.product.exceptions.QuantityLowerZeroException;
+import com.es.phoneshop.model.product.exceptions.LowerZeroException;
 import com.es.phoneshop.model.product.exceptions.StockException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,9 +80,9 @@ public class DefaultCartService implements CartService {
     }
 
     @Override
-    public void putToCart(Cart cart, Long productId, int quantity) throws StockException, QuantityLowerZeroException {
+    public void putToCart(Cart cart, Long productId, int quantity) throws StockException, LowerZeroException {
         if (quantity <= 0) {
-            throw new QuantityLowerZeroException("Not enough stock, available " + productDao.getProduct(productId).getStock());
+            throw new LowerZeroException("Not enough stock, available " + productDao.getProduct(productId).getStock());
         }
         Product product = productDao.getProduct(productId);
         int productStock = product.getStock();

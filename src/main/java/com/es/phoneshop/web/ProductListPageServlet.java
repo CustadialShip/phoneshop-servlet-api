@@ -5,7 +5,7 @@ import com.es.phoneshop.model.product.cart.CartService;
 import com.es.phoneshop.model.product.cart.DefaultCartService;
 import com.es.phoneshop.model.product.enums.sort.SortField;
 import com.es.phoneshop.model.product.enums.sort.SortOrder;
-import com.es.phoneshop.model.product.exceptions.QuantityLowerZeroException;
+import com.es.phoneshop.model.product.exceptions.LowerZeroException;
 import com.es.phoneshop.model.product.exceptions.StockException;
 import com.es.phoneshop.model.product.productdao.ArrayListProductDao;
 import com.es.phoneshop.model.product.productdao.Product;
@@ -80,7 +80,7 @@ public class ProductListPageServlet extends HttpServlet {
                     "Not enough stock, available " + productDao.getProduct(productId).getStock(),
                     productId);
             return;
-        } catch (QuantityLowerZeroException exception) {
+        } catch (LowerZeroException exception) {
             setErrorMessage(request, response, "Quantity should be > 0", productId);
             return;
         }
